@@ -8,7 +8,7 @@ import Sidebar from "./components/Sidebar";
 import ProductCard from "./components/ProductCard";
 import AddProduct from "./components/AddProduct";
 
-import Checkout from "./pages/Checkout";
+import Checkout from "./pages/CheckOut";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Orders from "./pages/Orders";
