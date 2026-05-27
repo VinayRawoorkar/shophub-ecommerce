@@ -64,7 +64,7 @@ function App() {
   try {
 
     const res = await fetch(
-      "http://127.0.0.1:5000/products"
+      "https://shophub-backend-env.eba-ivmxrybm.us-east-1.elasticbeanstalk.com/products"
     );
 
     const data = await res.json();
@@ -195,7 +195,7 @@ function App() {
 
       await fetch(
 
-        `http://127.0.0.1:5000/delete-product/${id}`,
+        `https://shophub-backend-env.eba-ivmxrybm.us-east-1.elasticbeanstalk.com/delete-product/${id}`,
 
         {
           method:"DELETE"
