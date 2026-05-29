@@ -9,6 +9,14 @@ import os
 # LOAD ENV
 load_dotenv()
 
+mongo_uri = os.getenv("MONGO_URI")
+
+client = MongoClient(mongo_uri)
+
+db = client["ecommerceDB"]
+
+collection = db["products"]
+
 # FLASK APP
 app = Flask(__name__)
 
@@ -17,9 +25,10 @@ CORS(app)
 
 # MONGO CONNECTION
 client = MongoClient(
-    os.getenv("MONGO_URI")
+    "mongodb+srv://vinay1234:vinay123@myproject.n5wzxax.mongodb.net/ecommerceDB?retryWrites=true&w=majority&appName=Myproject",
+    serverSelectionTimeoutMS=5000
 )
-
+client.server_info()   # force connection test
 db = client["ecommerceDB"]
 
 collection = db["products"]
@@ -59,39 +68,32 @@ def get_products():
 @app.route("/add-product", methods=["POST"])
 def add_product():
 
-    data = request.json
+    try:
+        data = request.json
 
-    product = {
+        product = {
+            "name": data.get("name"),
+            "brand": data.get("brand"),
+            "category": data.get("category"),
+            "description": data.get("description"),
+            "price": data.get("price"),
+            "stock": data.get("stock"),
+            "rating": data.get("rating"),
+            "discount": data.get("discount"),
+            "image": data.get("image"),
+            "images": data.get("images", [])
+        }
 
-        "name": data.get("name"),
+        collection.insert_one(product)
 
-        "brand": data.get("brand"),
+        return jsonify({
+            "message": "Product added successfully"
+        })
 
-        "category": data.get("category"),
-
-        "description": data.get("description"),
-
-        "price": data.get("price"),
-
-        "stock": data.get("stock"),
-
-        "rating": data.get("rating"),
-
-        "discount": data.get("discount"),
-
-        # MAIN IMAGE
-        "image": data.get("image"),
-
-        # MULTIPLE IMAGES
-        "images": data.get("images", [])
-
-    }
-
-    collection.insert_one(product)
-
-    return jsonify({
-        "message": "Product added successfully"
-    })
+    except Exception as e:
+        return jsonify({
+            "error": str(e)
+        }), 500
 
 # =========================================
 # UPDATE PRODUCT
@@ -177,6 +179,28 @@ def delete_product(id):
         return jsonify({
             "error": str(e)
         }), 500
+
+# =========================================
+# TEST DATABASE
+# =========================================
+
+@app.route("/test-db")
+def test_db():
+
+    try:
+
+        collection.find_one()
+
+        return jsonify({
+            "status": "Mongo Connected ✅"
+        })
+
+    except Exception as e:
+
+        return jsonify({
+            "error": str(e)
+        }), 500
+
 
 # =========================================
 # RUN SERVER
