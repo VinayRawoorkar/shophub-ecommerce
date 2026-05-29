@@ -169,7 +169,7 @@ function AddProduct({
       if (editingProduct) {
 
         await fetch(
-          `https://shophub-backend-env.eba-ivmxrybm.us-east-1.elasticbeanstalk.com/update-product/${editingProduct._id}`,
+          `http://localhost:5000/update-product/${editingProduct._id}`,
           {
             method: "PUT",
 
@@ -192,7 +192,7 @@ function AddProduct({
 
         // ADD PRODUCT
         await fetch(
-          "https://shophub-backend-env.eba-ivmxrybm.us-east-1.elasticbeanstalk.com/add-product",
+          "http://localhost:5000/add-product",
           {
             method: "POST",
 
