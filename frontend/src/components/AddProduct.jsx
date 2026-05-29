@@ -169,7 +169,7 @@ function AddProduct({
       if (editingProduct) {
 
         await fetch(
-          `http://shophub-backend-env.eba-ivmxrybm.us-east-1.elasticbeanstalk.com/update-product/${editingProduct._id}`,
+          `https://shophub-backend-env.eba-ivmxrybm.us-east-1.elasticbeanstalk.com/update-product/${editingProduct._id}`,
           {
             method: "PUT",
 
@@ -192,7 +192,7 @@ function AddProduct({
 
         // ADD PRODUCT
         await fetch(
-          "http://shophub-backend-env.eba-ivmxrybm.us-east-1.elasticbeanstalk.com/add-product",
+          "https://shophub-backend-env.eba-ivmxrybm.us-east-1.elasticbeanstalk.com/add-product",
           {
             method: "POST",
 
